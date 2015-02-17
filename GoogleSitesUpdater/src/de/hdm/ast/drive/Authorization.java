@@ -5,7 +5,7 @@ import com.google.api.services.drive.DriveScopes;
 
 public class Authorization {
 
-	public AppIdentityCredential createCredential() {
+	public static AppIdentityCredential createCredential() {
 		AppIdentityCredential credential = new AppIdentityCredential(
 				DriveScopes.all());
 		return credential;

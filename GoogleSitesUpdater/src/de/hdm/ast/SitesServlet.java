@@ -7,6 +7,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
+import com.google.api.services.drive.Drive;
+
+import de.hdm.ast.drive.Authorization;
+import de.hdm.ast.drive.Service;
+
 /**
  * Servlet, dass über einen Cronjob angestoßen wird.
  * 
@@ -16,9 +23,18 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class SitesServlet extends HttpServlet {
 
+	AppIdentityCredential credentials;
+	Drive drive;
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		System.out.print("Job wurde erfolgreich asugeführt");
+		
+		credentials = Authorization.createCredential();
+		drive = Service.buildService(credentials);
+		
+
+		System.out.println(drive.files().list().size());
+		System.out.print("Job wurde erfolgreich ausgeführt");
 	}
 
 	@Override

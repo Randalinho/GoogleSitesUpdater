@@ -1,6 +1,7 @@
 package de.hdm.ast.drive;
 
 import com.google.api.client.auth.oauth2.Credential;
+import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -16,12 +17,12 @@ public class Service {
 	 *            OAuth 2.0 credentials.
 	 * @return Drive service object.
 	 */
-	public static Drive buildService(Credential credentials) {
+	public static Drive buildService(AppIdentityCredential credentials) {
 		HttpTransport httpTransport = new NetHttpTransport();
 		JacksonFactory jsonFactory = new JacksonFactory();
 
 		return new Drive.Builder(httpTransport, jsonFactory, credentials)
-				.setApplicationName("SitesUpdater").build();
+				.setApplicationName("GoogleSitesUpdater").build();
 	}
 
 }
