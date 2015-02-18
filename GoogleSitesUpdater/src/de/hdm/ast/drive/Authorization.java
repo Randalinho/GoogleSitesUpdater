@@ -21,36 +21,27 @@ import com.google.api.services.drive.DriveScopes;
 
 public class Authorization {
 
-	// public static AppIdentityCredential createCredential() {
-	// AppIdentityCredential credential = new AppIdentityCredential(
-	// Arrays.asList(DriveScopes.DRIVE));
-	// return credential;
-	// }
-
 	private static final String API_KEY = "key.p12";
 
 	public static Drive getDriveService() throws GeneralSecurityException,
 			IOException, URISyntaxException {
-//		HttpTransport httpTransport = new NetHttpTransport();
-//		JsonFactory jsonFactory = new JacksonFactory();
 		JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-//		AppIdentityCredential credential = new AppIdentityCredential.Builder(
-//				Arrays.asList(DriveScopes.DRIVE)).build();
+		HttpTransport httpTransport = GoogleNetHttpTransport
+				.newTrustedTransport();
 		GoogleCredential credential = new GoogleCredential.Builder()
-	    .setTransport(httpTransport)
-	    .setJsonFactory(JSON_FACTORY)
-	    .setServiceAccountId("1094795664207-88e383oaijjuh334qdkr7nf0dvuut32r@developer.gserviceaccount.com")
-	    .setServiceAccountPrivateKeyFromP12File(new File(API_KEY))
-	    .setServiceAccountScopes(Collections.singleton(DriveScopes.DRIVE))
-	    .build();
+				.setTransport(httpTransport)
+				.setJsonFactory(JSON_FACTORY)
+				.setServiceAccountId(
+						"1094795664207-88e383oaijjuh334qdkr7nf0dvuut32r@developer.gserviceaccount.com")
+				.setServiceAccountPrivateKeyFromP12File(new File(API_KEY))
+				.setServiceAccountScopes(
+						Collections.singleton(DriveScopes.DRIVE)).build();
 		GoogleClientRequestInitializer keyInitializer = new CommonGoogleClientRequestInitializer(
 				API_KEY);
 		Drive service = new Drive.Builder(httpTransport, JSON_FACTORY, null)
 				.setHttpRequestInitializer(credential)
 				.setGoogleClientRequestInitializer(keyInitializer)
-				.setApplicationName("GoogleSitesUpdater")
-				.build();
+				.setApplicationName("GoogleSitesUpdater").build();
 		return service;
 
 	}
