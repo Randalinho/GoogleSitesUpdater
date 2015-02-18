@@ -58,6 +58,7 @@ public class SitesServlet extends HttpServlet {
 			    System.out.println("MIME type: " + file.getMimeType());
 			    System.out.println("LastModifyingUserName: " + file.getLastModifyingUserName());
 			    System.out.println("ID: " + file.getId());
+			    System.out.println("Download URL: " + file.getDownloadUrl());
 			  }
 			}
 		
