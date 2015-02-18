@@ -19,6 +19,7 @@ import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
 
 import de.hdm.ast.drive.Authorization;
+import de.hdm.ast.drive.FileDownload;
 import de.hdm.ast.drive.Service;
 
 /**
@@ -36,8 +37,6 @@ public class SitesServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-//		credentials = Authorization.createCredential();
-//		drive = Service.buildService(credentials);
 		
 		try {
 			drive = Authorization.getDriveService();
@@ -47,8 +46,8 @@ public class SitesServlet extends HttpServlet {
 		}
 
 		
-		Files.List request1 = drive.files().list();
-		FileList files = request1.execute();
+		Files.List listOfFiles = drive.files().list();
+		FileList files = listOfFiles.execute();
 
 		if (files != null) {
 			  for (File file : files.getItems()) {
@@ -59,6 +58,7 @@ public class SitesServlet extends HttpServlet {
 			    System.out.println("LastModifyingUserName: " + file.getLastModifyingUserName());
 			    System.out.println("ID: " + file.getId());
 			    System.out.println("Download URL: " + file.getDownloadUrl());
+			    FileDownload.downloadFile(drive, file);
 			  }
 			}
 		
