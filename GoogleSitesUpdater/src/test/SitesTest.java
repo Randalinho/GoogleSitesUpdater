@@ -19,26 +19,34 @@ import com.google.gdata.data.sites.Theme;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
+import de.hdm.ast.drive.DriveUtil;
 import de.hdm.ast.sites.Authorization;
+import de.hdm.ast.sites.SitesUtil;
 
 public class SitesTest {
 
 	SitesService service = new SitesService("TEST");
 
 	@Test
-	public void test() throws IOException, ServiceException, GeneralSecurityException {
+	public void test() throws IOException, ServiceException,
+			GeneralSecurityException {
 
 		service.setUserCredentials("fabianroeber@prestige-worldwide.in",
 				"schmieder1234");
-		//SiteEntry newSiteEntry = createSite("title", "summary for site", "slate", "tag");
-		getSiteFeed();
+		// SiteEntry newSiteEntry = createSite("title", "summary for site",
+		// "slate", "tag");
+		//getSiteFeed();
+		
+		SitesUtil.updateSite("TestString");
 
 	}
 
 	public String getSiteFeedUrl() {
 
-		 String domain = "prestige-worldwide.in";  // OR if the Site is hosted on Google Apps, your domain (e.g. example.com)
-		  return "https://sites.google.com/feeds/site/" + domain + "/";
+		String domain = "prestige-worldwide.in"; // OR if the Site is hosted on
+													// Google Apps, your domain
+													// (e.g. example.com)
+		return "https://sites.google.com/feeds/site/" + domain + "/";
 	}
 
 	public void getSiteFeed() throws IOException, ServiceException,
@@ -46,7 +54,6 @@ public class SitesTest {
 
 		SiteFeed siteFeed = service.getFeed(new URL(getSiteFeedUrl()),
 				SiteFeed.class);
-		
 
 		for (SiteEntry entry : siteFeed.getEntries()) {
 			System.out.println("Feed erfolgreich geladen");
@@ -56,13 +63,13 @@ public class SitesTest {
 			System.out.println("");
 		}
 	}
-	
+
 	public SiteEntry createSite(String title, String summary, String theme,
 			String tag) throws MalformedURLException, IOException,
 			ServiceException, GeneralSecurityException {
-		
-//		SitesService client = Authorization.getSitesService();
-		
+
+		// SitesService client = Authorization.getSitesService();
+
 		SiteEntry entry = new SiteEntry();
 		entry.setTitle(new PlainTextConstruct(title));
 		entry.setSummary(new PlainTextConstruct(summary));

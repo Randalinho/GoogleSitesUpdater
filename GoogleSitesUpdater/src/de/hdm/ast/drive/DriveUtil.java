@@ -31,11 +31,11 @@ public class DriveUtil {
 		if (files != null) {
 			for (File file : files.getItems()) {
 				// Meta data
-				result += "Title: " + file.getTitle() + "\n" + "Description: "
-						+ file.getDescription() + "\n" + "MIME type: "
-						+ file.getMimeType() + "\n" + "LastModifyingUserName: "
-						+ file.getLastModifyingUserName() + "\n" + "ID: "
-						+ file.getId() + "\n" + "File Size: " + file.getFileSize() + "\n \n";
+				result += "Title: " + file.getTitle() + "<br />" + "Description: "
+						+ file.getDescription() + "<br />" + "MIME type: "
+						+ file.getMimeType() + "<br />" + "LastModifyingUserName: "
+						+ file.getLastModifyingUserName() + "<br />" + "ID: "
+						+ file.getId() + "<br />" + "File Size: " + file.getFileSize() + "<br /><br />";
 				System.out.println("Download URL: " + file.getDownloadUrl());
 				FileDownload.downloadFile(drive, file);
 			}

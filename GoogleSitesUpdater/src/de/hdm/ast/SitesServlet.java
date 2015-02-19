@@ -19,6 +19,7 @@ import com.google.gdata.data.sites.TagCategory;
 import com.google.gdata.data.sites.Theme;
 import com.google.gdata.util.ServiceException;
 
+import de.hdm.ast.drive.DriveUtil;
 import de.hdm.ast.sites.Authorization;
 import de.hdm.ast.sites.SitesUtil;
 
@@ -32,13 +33,10 @@ import de.hdm.ast.sites.SitesUtil;
 public class SitesServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
-		// try {
-		// DriveUtil.printAllFiles();
-		// } catch (IOException e) {
-		// // TODO: handle exception
-		// }
+
 		try {
 			SitesUtil.getSiteFeed();
+			SitesUtil.updateSite(DriveUtil.getMetadata());
 
 		} catch (IOException | GeneralSecurityException | ServiceException e) {
 			e.printStackTrace();
