@@ -166,16 +166,16 @@ public class SitesUtil {
 		ContentFeed contentFeed = Authorization.getSitesService().getFeed(
 				new URL(buildContentFeedUrl() + "?kind=webpage"),
 				ContentFeed.class);
-		WebPageEntry entry = contentFeed.getEntries(WebPageEntry.class).get(1);
+		WebPageEntry entry = contentFeed.getEntries(WebPageEntry.class).get(0);
 
 		// Update title
-		entry.setTitle(new PlainTextConstruct("Updated Site"));
+		entry.setTitle(new PlainTextConstruct("Aktualisierte Seite"));
 
 		// Update HTML content
 		XmlBlob xml = new XmlBlob();
-		xml.setBlob("<p>" + s + "<p>");
+		xml.setBlob("<p>" + s + "</p>");
 		entry.setContent(new XhtmlTextConstruct(xml));
-		
+
 		entry.update();
 
 		System.out.println("ListPage updated!");
