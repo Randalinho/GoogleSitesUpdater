@@ -20,6 +20,7 @@ import com.google.gdata.data.sites.Theme;
 import com.google.gdata.util.ServiceException;
 
 import de.hdm.ast.sites.Authorization;
+import de.hdm.ast.sites.SitesUtil;
 
 /**
  * Servlet, dass über einen Cronjob angestoßen wird.
@@ -37,10 +38,8 @@ public class SitesServlet extends HttpServlet {
 		// // TODO: handle exception
 		// }
 		try {
-			SiteEntry newSiteEntry = createSite("title", "summary for site", "slate", "tag");
-			System.out.println("Name der neuen Seite: " + newSiteEntry.getSiteName());
-			getSiteFeed();
-			System.out.println("Feed erfolgreich geladen");
+			SitesUtil.getSiteFeed();
+
 		} catch (IOException | GeneralSecurityException | ServiceException e) {
 			e.printStackTrace();
 		}
@@ -51,53 +50,6 @@ public class SitesServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		doGet(req, resp);
-	}
-
-	public String getSiteFeedUrl() {
-
-		String domain = "goileseite"; // OR if the Site is hosted on Google
-										// Apps, your domain (e.g. example.com)
-		return "https://sites.google.com/feeds/site" + domain + "/";
-	}
-
-	public void getSiteFeed() throws IOException, ServiceException,
-			GeneralSecurityException {
-
-		System.out.println("Autorisierung wird angestoßen");
-		SitesService client = Authorization.getSitesService();
-		System.out.println("Autorisierung erfolgreich");
-
-		SiteFeed siteFeed = client.getFeed(new URL(getSiteFeedUrl()),
-				SiteFeed.class);
-		System.out.println(siteFeed.getTitle());
-
-		for (SiteEntry entry : siteFeed.getEntries()) {
-			System.out.println("Feed erfolgreich geladen");
-			System.out.println("title: " + entry.getTitle().getPlainText());
-			System.out.println("site name: " + entry.getSiteName().getValue());
-			System.out.println("theme: " + entry.getTheme().getValue());
-			System.out.println("");
-		}
-	}
-
-	public SiteEntry createSite(String title, String summary, String theme,
-			String tag) throws MalformedURLException, IOException,
-			ServiceException, GeneralSecurityException {
-		
-		SitesService client = Authorization.getSitesService();
-		
-		SiteEntry entry = new SiteEntry();
-		entry.setTitle(new PlainTextConstruct(title));
-		entry.setSummary(new PlainTextConstruct(summary));
-
-		Theme tt = new Theme();
-		tt.setValue(theme);
-		entry.setTheme(tt);
-
-		entry.getCategories().add(
-				new Category(TagCategory.Scheme.TAG, tag, null));
-
-		return client.insert(new URL(getSiteFeedUrl()), entry);
 	}
 
 }
