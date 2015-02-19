@@ -15,7 +15,9 @@ public class DriveUtil {
 	AppIdentityCredential credentials;
 	static Drive drive;
 
-	public static void printAllFiles() throws IOException {
+	public static String getMetadata() throws IOException {
+		String result = "";
+
 		try {
 			drive = Authorization.getDriveService();
 		} catch (GeneralSecurityException | URISyntaxException e) {
@@ -29,12 +31,11 @@ public class DriveUtil {
 		if (files != null) {
 			for (File file : files.getItems()) {
 				// Meta data
-				System.out.println("Title: " + file.getTitle());
-				System.out.println("Description: " + file.getDescription());
-				System.out.println("MIME type: " + file.getMimeType());
-				System.out.println("LastModifyingUserName: "
-						+ file.getLastModifyingUserName());
-				System.out.println("ID: " + file.getId());
+				result += "Title: " + file.getTitle() + "\n" + "Description: "
+						+ file.getDescription() + "\n" + "MIME type: "
+						+ file.getMimeType() + "\n" + "LastModifyingUserName: "
+						+ file.getLastModifyingUserName() + "\n" + "ID: "
+						+ file.getId() + "\n" + "File Size: " + file.getFileSize() + "\n \n";
 				System.out.println("Download URL: " + file.getDownloadUrl());
 				FileDownload.downloadFile(drive, file);
 			}
@@ -42,7 +43,8 @@ public class DriveUtil {
 
 		System.out.println("Liste Dateien Anzahl: "
 				+ drive.files().list().size());
-		System.out.println("Parents" + drive.getRootUrl());
+		
+		return result;
 
 	}
 
