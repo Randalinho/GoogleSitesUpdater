@@ -17,8 +17,7 @@ public class Authorization {
 
 		SitesService sitesService = new SitesService("inductive-mind-846");
 
-		sitesService.setUserCredentials("fabianroeber@prestige-worldwide.in",
-				"schmieder1234");
+		sitesService.setUserCredentials("test", "test");
 
 		return sitesService;
 
